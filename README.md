@@ -23,7 +23,7 @@ console.log(name); // this will output as 'Anand'
 ```js
 // example
 const name = "Rishu";
-let age = "18";
+let age = 18;
 console.log(`Hi! My name is ${name} and I am ${age + 2} years old.`);
 // this will output as 'Hi! My name is Rishu and I am 20 years old.'
 ```
