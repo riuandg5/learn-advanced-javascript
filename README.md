@@ -1,5 +1,19 @@
 # learn-advanced-javascript
 
+## const and let
++ `const` is used for declaring variables whose value will not change.
+```js
+const name = "Rishu";
+name = "Anand"; // this will show error in assignment to constant variable
+```
++ `let` is used for declaring variables whose value could change.
+```js
+let name = "Rishu";
+console.log(name); // this will output as Rishu
+name = "Anand";
+console.log(name); // this will output as Anand
+```
+
 ## Array Methods
 
 ### forEach
@@ -7,7 +21,7 @@
  + runs a callback function for each value in array.
  + returns undefined.
 
-```
+```js
 // syntax
 array.forEach(function(eachArrayValue, eachIndexInArray, entireArray){
 	- do something with parameters
@@ -16,7 +30,7 @@ array.forEach(function(eachArrayValue, eachIndexInArray, entireArray){
 	// returns nothing
 })
 ```
-```
+```js
 // example
 [1, 2, 3].forEach(function(val, ind, arr){
 	console.log(val, ind, arr);
@@ -34,14 +48,14 @@ array.forEach(function(eachArrayValue, eachIndexInArray, entireArray){
 + add result of that callback function into new array.
 + returns the new array.
 
-```
+```js
 // syntax
 array.map(function(eachArrayValue, eachIndexInArray, entireArray){
 	- return manipulated_value
 	// returns new array of manipulated values
 })
 ```
-```
+```js
 // example
 [1, 2, 3].map(function(val){
 	return val*2;
@@ -57,14 +71,14 @@ array.map(function(eachArrayValue, eachIndexInArray, entireArray){
 + if callback function returns true then that value will be added to the new array.
 + if callback function returns false then that value will be ignored.
 
-```
+```js
 // syntax
 array.filter(function(eachArrayValue, eachIndexInArray, entireArray){
 	- return conditional_statement
 	// returns new array with values which return true for condition
 })
 ```
-```
+```js
 // example
 [1, 2, 3].filter(function(val){
 	return val <= 2;
@@ -77,14 +91,14 @@ array.filter(function(eachArrayValue, eachIndexInArray, entireArray){
 + runs a callback function for each value in array.
 + if callback function returns true for first time for any value then iteration will stop and that value will be returned.
 
-```
+```js
 // syntax
 array.find(function(eachArrayValue, eachIndexInArray, entireArray){
 	- return conditional_statement
 	// returns value which returned true for first time
 })
 ```
-```
+```js
 // example
 [1, 2, 3].find(function(val){
 	return val > 1;
@@ -98,14 +112,14 @@ array.find(function(eachArrayValue, eachIndexInArray, entireArray){
 + runs a callback function for each value in array.
 + if callback function returns true for atleast one value in array then it returns true otherwise false.
 
-```
+```js
 // syntax
 array.some(function(eachArrayValue, eachIndexInArray, entireArray){
 	- return conditional_statement
 	// returns true if condition is true for atleast one value otherwise returns false
 })
 ```
-```
+```js
 // example
 [1, 2, 3].some(function(val){
 	return val <= 2;
@@ -118,14 +132,14 @@ array.some(function(eachArrayValue, eachIndexInArray, entireArray){
 + runs a callback function for each value in array.
 + if callback function returns true for every value in array then it returns true otherwise false.
 
-```
+```js
 // syntax
 array.every(function(eachArrayValue, eachIndexInArray, entireArray){
 	- return conditional_statement
 	// returns true if condition is true for every value otherwise returns false
 })
 ```
-```
+```js
 // example
 [1, 2, 3].every(function(val){
 	return val <= 2;
@@ -140,14 +154,14 @@ array.every(function(eachArrayValue, eachIndexInArray, entireArray){
 + the first parameter (or accumulator) to the callback is either the first value in the array or the optional second parameter.
 + the returned value from callback becomes the new value of accumulator.
 
-```
+```js
 // syntax
 array.reduce(function(accumulator, nextValue, eachIndexInArray, entireArray){
 	- return something_using_parameters_which_will_become_next_accumulator
 	// returns final value of accumulator
 }, optionalSecondParameter)
 ```
-```
+```js
 // example
 [1, 2, 3, 4].reduce(function(acc, nexVal){
 	return acc + nexVal;
@@ -160,7 +174,7 @@ array.reduce(function(accumulator, nextValue, eachIndexInArray, entireArray){
 // 4. 10    null     acc
 // output = 10
 ```
-```
+```js
 // example
 [1, 2, 3, 4].reduce(function(acc, nexVal){
 	return acc + nexVal;
