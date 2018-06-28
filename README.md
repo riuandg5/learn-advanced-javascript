@@ -3,15 +3,29 @@
 ## const and let
 + `const` is used for declaring variables whose value will not change.
 ```js
+// example
 const name = "Rishu";
 name = "Anand"; // this will show error in assignment to constant variable
 ```
 + `let` is used for declaring variables whose value could change.
 ```js
+// example
 let name = "Rishu";
-console.log(name); // this will output as Rishu
+console.log(name); // this will output as 'Rishu'
 name = "Anand";
-console.log(name); // this will output as Anand
+console.log(name); // this will output as 'Anand'
+```
+
+## Templating string
++ enclose string in backticks `` ` ``
++ use `${variableName}` to substitute value of `variableName` in string.
++ use `${validJavaScriptExpression}` to substitute result of `validJavaScriptExpression` in string.
+```js
+// example
+const name = "Rishu";
+let age = "18";
+console.log(`Hi! My name is ${name} and I am ${age + 2} years old.`);
+// this will output as 'Hi! My name is Rishu and I am 20 years old.'
 ```
 
 ## Array Methods
