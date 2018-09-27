@@ -202,3 +202,88 @@ array.reduce(function(accumulator, nextValue, eachIndexInArray, entireArray){
 // 5. 60    null     acc
 // output = 60
 ```
+
+## Fat-Arrow Function
++ instead of writing `function` keyword use fat-arrow `=>`
+```js
+// old syntax
+let myFunction = function (number){
+	return 2*number;
+}
+// new syntax
+let myFunction = (number) => {
+	return 2*number;
+}
+```
++ can remove `return` keyword and curley brackets `{}` if function block has single line of code.
+```js
+// old syntax
+let myFunction = (number) => {
+	return 2*number;
+}
+// new syntax
+let myFunction = (number) => 2*number;
+```
++ can remove round brackets `()` from function argument list if and only if there is one argument.
+```js
+// old syntax
+let myFunction = (number) => 2*number;
+// new syntax
+let myFunction = number => 2*number;
+// Or
+let myFunction = (number => 2*number);
+// semicolon restricted placement
+let myFunction = (number => 2*number;)
+```
++ fat arrow function lexically bind `this` value that is calling a member function using `this` always refers to the enclosing `this`
+```js
+// unexpected output
+let team = {
+	members: ["Rishu", "Anand"],
+	teamName: "REU",
+	summary: function(){
+		return this.members.map(function(member){
+			return `${member} is on team ${this.teamName}`;
+		});
+	}
+}
+team.summary(); // Cannot read property teamName of undefined
+```
+```js
+// correct using self reference
+let team = {
+	members: ["Rishu", "Anand"],
+	teamName: "REU",
+	summary: function(){
+    let self = this;
+		return this.members.map(function(member){
+			return `${member} is on team ${self.teamName}`;
+		});
+	}
+}
+team.summary(); // ["Rishu is on team REU", "Anand is on team REU"]
+```
+```js
+// correct using function.prototype.bind(this)
+let team = {
+	members: ["Rishu", "Anand"],
+	teamName: "REU",
+	summary: function(){
+		return this.members.map(function(member){
+			return `${member} is on team ${this.teamName}`;
+		}.bind(this));
+	}
+}
+team.summary(); // ["Rishu is on team REU", "Anand is on team REU"]
+```
+```js
+// correct using fat-arrow function
+let team = {
+	members: ["Rishu", "Anand"],
+	teamName: "REU",
+	summary: function(){
+		return this.members.map(member => `${member} is on team ${this.teamName}`);
+	}
+}
+team.summary(); // ["Rishu is on team REU", "Anand is on team REU"]
+```
