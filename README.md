@@ -287,6 +287,7 @@ let team = {
 }
 team.summary(); // ["Rishu is on team REU", "Anand is on team REU"]
 ```
+
 ## Object literals
 + `keyValue: keyValue` is equivalent to `keyValue`
 + `keyValue: function(){}` is equivalent to `keyValue(){}`
@@ -316,4 +317,25 @@ let o = {
 };
 console.log(o); // {"a":1,"b":2,"c":3}
 console.log(o.d()); // True
+```
+
+## Default function argument
++ if function is called without argument than default argument value is used.
+```js
+// old syntax
+function print(name){
+	if(!name){
+		name = "Hello World";
+	}
+	return name;
+}
+console.log(print()); // Hello World
+console.log(print("Rishu Anand")); // Rishu Anand
+
+// new syntax
+function print(name = "Hello World"){
+	return name;
+}
+console.log(print()); // Hello World
+console.log(print("Rishu Anand")); // Rishu Anand
 ```
