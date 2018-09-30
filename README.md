@@ -287,3 +287,33 @@ let team = {
 }
 team.summary(); // ["Rishu is on team REU", "Anand is on team REU"]
 ```
+## Object literals
++ `keyValue: keyValue` is equivalent to `keyValue`
++ `keyValue: function(){}` is equivalent to `keyValue(){}`
+```js
+// old syntax
+let a = 1, b = 2, num = 3;
+let o = {
+	a: a,
+	b: b,
+	c: num,
+	d: function(){
+		return this.a + this.b === this.c;
+	}
+};
+console.log(o); // {"a":1,"b":2,"c":3}
+console.log(o.d()); // True
+
+// new syntax
+let a = 1, b = 2, num = 3;
+let o = {
+	a,
+	b,
+	c: num,
+	d(){
+		return this.a + this.b === this.c;
+	}
+};
+console.log(o); // {"a":1,"b":2,"c":3}
+console.log(o.d()); // True
+```
