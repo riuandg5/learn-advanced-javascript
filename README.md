@@ -339,3 +339,219 @@ function print(name = "Hello World"){
 console.log(print()); // Hello World
 console.log(print("Rishu Anand")); // Rishu Anand
 ```
+
+## Promise and Async-Await
++ promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
++ asynchronous function operates asynchronously via the event loop, using an implicit Promise to return its result.
++ syntax and structure of using async functions is much more like using standard synchronous functions.
++ async function contains await expression that pauses the execution of the async function and waits for the passed Promise's resolution, and then resumes the async function's execution.
+```js
+// example 1
+
+// callback
+getData(id, (foundedData, error) => {
+	if (!error) {
+		updateData(foundedData, changes, (updatedData, error) => {
+			if (!error) {
+				console.log(updatedData);
+			} else {
+				console.log(error);
+			}
+		});
+	} else {
+		console.log(error);
+	}
+});
+
+// promise
+getData(id)
+	.then(foundedData => updateData(foundedData, changes))
+	.then(updatedData => console.log(updatedData))
+	.catch(error);
+// OR
+let foundedData = getData(id)
+	.catch(error);
+let updatedData = updateData(foundedData, changes)
+	.catch(error);
+console.log(updatedData);
+
+// async-await
+async function findAndUpdateData(id, changes) {
+	try {
+		let foundedData = await getData(id);
+		let updatedData = await updateData(foundedData, changes);
+		console.log(updatedData);
+	} catch (error) {
+		console.log(error);
+	}
+}
+```
+```js
+// example 2
+// syntax comparison for printing in order
+
+// setTimeout is acting like a function which takes
+// t seconds to print the string where t = length of string
+
+// calling order
+// print("hello world");
+// print("hello");
+// console.log("done");
+
+// result order wanted
+// hello world
+// hello
+// done
+```
+```js
+// sync
+function syncPrint(str) {
+    setTimeout(() => {
+        console.log(str);
+    }, str.length*1000);
+}
+syncPrint("hello world");
+syncPrint("hello");
+console.log("done");
+
+// result
+// done
+// hello
+// hello world
+
+// "hello world" waits for 11 seconds
+// "hello" waits for 5 seconds
+// "done" waits for nothing
+// that is expected order of result but not what we wanted
+```
+```js
+// promise
+function promisePrint(str) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log(str);
+            resolve();
+        }, str.length*1000);
+    });
+}
+promisePrint("hello world")
+	.then(() => promisePrint("hello"))
+	.then(() => console.log("done"));
+
+// result
+// hello world
+// hello
+// done
+
+// result is what we wanted but code looks almost like
+// callback hell with more indentations
+```
+```js
+// async
+function asyncPrint(str) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log(str);
+            resolve();
+        }, str.length*1000);
+    });
+}
+async function forAyncPrint() {
+    await asyncPrint("hello world");
+    await asyncPrint("hello");
+    console.log("done");
+}
+forAyncPrint();
+
+// result
+// hello world
+// hello
+// done
+
+// result is what we wanted, code looks almost like sync
+// and with less indentations but await is valid only in
+// async functions and hence needs an extra calling
+// function, still its useful because calling function
+// also returns promise if called function has return
+// statement
+```
+```js
+// example 3
+// fetching and logging as per need
+
+const data = [
+  { info: 'first', wait: 3000 },
+  { info: 'second', wait: 2000 },
+  { info: 'third', wait: 1000 }
+];
+
+// to get info with some delay
+function getInfo(d) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(d.info), d.wait);
+  });
+}
+
+// result of logInOrder
+// first
+// second
+// third
+
+// result of logOutOfOrder
+// third
+// second
+// first
+```
+```js
+// log in order using promises
+// promises are resolved in parallel
+// but logged in order using reduce chain
+function logInOrderPromise(data) {
+  // get all infos
+  const infoPromises = data.map(d => getInfo(d));
+  // log them in order
+  infoPromises.reduce((chain, infoPromise) => {
+		return chain.then(() => infoPromise)
+			.then(info => console.log(info));
+  }, Promise.resolve());
+}
+logInOrderPromise(data);
+```
+```js
+// log in order using async await
+// promises are resolved and logged one by one
+async function logInOrderAsync(data) {
+  for (const d of data) {
+    console.log(await getInfo(d));
+  }
+}
+logInOrderAsync(data);
+```
+```js
+// log in order using async await
+// promises are resolved in parallel
+// but logged in order using await in standard for loop
+async function logInOrderAsyncParallel(data) {
+  // get all infos
+  const infoPromises = data.map(async d => await getInfo(d));
+  // log them in order
+  for (const infoPromise of infoPromises) {
+    console.log(await infoPromise);
+  }
+}
+logInOrderAsyncParallel(data);
+```
+```js
+// log which resolves first using promises
+function logOutOfOrderPromise(data) {
+  data.forEach(d => getInfo(d).then(info => console.log(info)));
+}
+logOutOfOrderPromise(data);
+```
+```js
+// log which resolves first using async await
+function logOutOfOrderAsync(data) {
+  data.forEach(async d => console.log(await getInfo(d)));
+}
+logOutOfOrderAsync(data);
+```
